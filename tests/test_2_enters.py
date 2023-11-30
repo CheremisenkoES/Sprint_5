@@ -1,71 +1,63 @@
 from locator import TestLocators
+import data
+from selenium.webdriver.support import expected_conditions as ex_cond
+from selenium.webdriver.support.ui import WebDriverWait
 
 class TestEnterButtons:
-    def test_enter_button(self, driver, email_pretty, password_pretty):
+    def test_enter_button(self, driver):
+        driver.find_element(*TestLocators.enter_button).click()
+        WebDriverWait(driver, 5).until(ex_cond.url_contains("/login"))
 
-        driver.get("https://stellarburgers.nomoreparties.site/")
+        driver.find_element(*TestLocators.email_field).send_keys(data.email_pretty)
+        driver.find_element(*TestLocators.password_field).send_keys(data.password_pretty)
+
+        WebDriverWait(driver, 5).until(ex_cond.element_to_be_clickable(TestLocators.enter_button))
         driver.find_element(*TestLocators.enter_button).click()
 
-        driver.find_element(*TestLocators.email_field).click()
-        driver.find_element(*TestLocators.email_field).send_keys(email_pretty)
+        driver.find_element(*TestLocators.cabinet_button).click()
+        WebDriverWait(driver, 5).until(ex_cond.url_contains("/profile"))
 
-        driver.find_element(*TestLocators.password_field).click()
-        driver.find_element(*TestLocators.password_field).send_keys(password_pretty)
+        assert "тестер" == driver.find_element(*TestLocators.name_in_profile).get_attribute("value")
 
-        driver.find_element(*TestLocators.enter_button).click()
-
-        assert '/stellarburgers.nomoreparties.site' in driver.current_url
-
-        driver.quit()
-
-    def test_enter_lk(self, driver, email_pretty, password_pretty):
-        driver.get("https://stellarburgers.nomoreparties.site/")
+    def test_enter_lk(self, driver):
         driver.find_element(*TestLocators.cabinet_button).click()
 
-        driver.find_element(*TestLocators.email_field).click()
-        driver.find_element(*TestLocators.email_field).send_keys(email_pretty)
-
-        driver.find_element(*TestLocators.password_field).click()
-        driver.find_element(*TestLocators.password_field).send_keys(password_pretty)
+        driver.find_element(*TestLocators.email_field).send_keys(data.email_pretty)
+        driver.find_element(*TestLocators.password_field).send_keys(data.password_pretty)
 
         driver.find_element(*TestLocators.enter_button).click()
 
-        assert '/stellarburgers.nomoreparties.site' in driver.current_url
+        driver.find_element(*TestLocators.cabinet_button).click()
+        WebDriverWait(driver, 5).until(ex_cond.url_contains("/profile"))
 
-        driver.quit()
+        assert "тестер" == driver.find_element(*TestLocators.name_in_profile).get_attribute("value")
 
-    def test_enter_in_reg_form(self, driver, email_pretty, password_pretty):
-        driver.get("https://stellarburgers.nomoreparties.site/register")
+    def test_enter_in_reg_form(self, driver):
+        driver.find_element(*TestLocators.cabinet_button).click()
+        driver.find_element(*TestLocators.reg_button).click()
         driver.find_element(*TestLocators.enter_in_reg_form).click()
-
-        driver.find_element(*TestLocators.email_field).click()
-        driver.find_element(*TestLocators.email_field).send_keys(email_pretty)
-
-        driver.find_element(*TestLocators.password_field).click()
-        driver.find_element(*TestLocators.password_field).send_keys(password_pretty)
-
+        driver.find_element(*TestLocators.email_field).send_keys(data.email_pretty)
+        driver.find_element(*TestLocators.password_field).send_keys(data.password_pretty)
         driver.find_element(*TestLocators.enter_button).click()
 
-        assert '/stellarburgers.nomoreparties.site' in driver.current_url
+        driver.find_element(*TestLocators.cabinet_button).click()
+        WebDriverWait(driver, 5).until(ex_cond.url_contains("/profile"))
 
-        driver.quit()
+        assert "тестер" == driver.find_element(*TestLocators.name_in_profile).get_attribute("value")
 
-    def test_enter_recover(self, driver, email_pretty, password_pretty):
-        # Проверь вход через кнопку в форме восстановления пароля.
+    def test_enter_recover(self, driver):
+        driver.find_element(*TestLocators.enter_button).click()
+        driver.find_element(*TestLocators.recover_password_button).click()
 
-        # Открыть сайт и зайти в ЛК
-        driver.get("https://stellarburgers.nomoreparties.site/forgot-password")
         driver.find_element(*TestLocators.enter_in_recover_form).click()
 
-        driver.find_element(*TestLocators.email_field).click()
-        driver.find_element(*TestLocators.email_field).send_keys(email_pretty)
+        driver.find_element(*TestLocators.email_field).send_keys(data.email_pretty)
+        driver.find_element(*TestLocators.password_field).send_keys(data.password_pretty)
 
-        driver.find_element(*TestLocators.password_field).click()
-        driver.find_element(*TestLocators.password_field).send_keys(password_pretty)
-
+        WebDriverWait(driver, 5).until(ex_cond.element_to_be_clickable(TestLocators.enter_button))
         driver.find_element(*TestLocators.enter_button).click()
 
-        # Проверка страницы после успешного входа
-        assert '/stellarburgers.nomoreparties.site' in driver.current_url
+        driver.find_element(*TestLocators.cabinet_button).click()
+        WebDriverWait(driver, 5).until(ex_cond.url_contains("/profile"))
 
-        driver.quit()
+        assert "тестер" == driver.find_element(*TestLocators.name_in_profile).get_attribute("value")

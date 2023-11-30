@@ -11,10 +11,16 @@ class TestLocators:
     logo = By.CSS_SELECTOR, ".AppHeader_header__logo__2D0X2 svg"  # Логотип
     exit_button = By.CSS_SELECTOR, ".Account_button__14Yp3"  # Кнопка "Выход" из ЛК
     enter_button = By.CSS_SELECTOR, ".button_button__33qZ0"  # Кнопка "Войти в личный кабинет"
-    bread_button = By.CSS_SELECTOR, ".tab_tab__1SPyG:nth-child(1) > .text"  # Кнопка "Булки"
-    sous_button = By.CSS_SELECTOR, ".tab_tab__1SPyG:nth-child(2) > .text"  # Кнопка "Соусы"
-    content_button = By.CSS_SELECTOR, ".tab_tab__1SPyG:nth-child(3) > .text"  # Кнопка "Начинки"
+    bread_button = By.XPATH, "//span[text()='Булки']/parent::*"   # вкладка "Булки"
+    sous_button = By.XPATH, '//span[text()="Соусы"]/parent::*'  # вкладка "Соусы"
+    content_button = By.XPATH, "//span[text()='Начинки']/parent::*"  # вкладка "Начинки"
     show_password = By.CSS_SELECTOR, ".input__icon path"  # иконка показать/скрыть пароль
     error = By.XPATH, ".//p[contains(.,'Некорректный пароль')]"  # ошибка "некорректный пароль".
-    enter_in_reg_form = By.LINK_TEXT, "Войти"  # кнопка Войти в форме регистрации
+    enter_in_reg_form = By.CSS_SELECTOR, ".Auth_link__1fOlj"  # кнопка Войти в форме регистрации
     enter_in_recover_form = By.LINK_TEXT, "Войти"  # кнопка Войти в форме восстановления
+    recover_password_button = By.LINK_TEXT, "Восстановить пароль" # кнопка "восстановить пароль"
+    reg_button = By.LINK_TEXT, 'Зарегистрироваться'  # кнопка Зарегистрироваться под формой в ЛК
+    menu_profile = By.XPATH, '//*[contains(@class, "Account_list_")]'
+    name_in_profile = By.XPATH, '//*[text()="Имя"]/following-sibling::input'  # Поле имени
+    ingredients_bar = By.XPATH, '//*[contains(@class, "tab_tab") and contains(@class, "current")]/child::span'  # Выбранная вкладка конструктора
+
